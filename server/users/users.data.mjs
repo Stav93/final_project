@@ -1,10 +1,5 @@
 import {getDB} from "../db.mjs"
 import { ObjectID } from "bson";
-import { ConnectionPoolClosedEvent } from "mongodb";
-
-let users = [
-
-];
 
 async function getUsersColletion() {
     const db = await getDB();
@@ -31,11 +26,7 @@ export async function removeUser(id) {
     return usersColection.deleteOne({_id: ObjectID(id)});
 }
 
-export function editUser(id, user) {
-    const editedUser = {
-        ...user,
-        id,
-    };
-
-    users = users.map(user => user.id == id? editedUser : user);
+export async function editUser(id, user) {
+    const usersColection = await getUsersColletion();
+  return usersColection.updateOne({_id: ObjectID(id)} , { $set: user })
 }
