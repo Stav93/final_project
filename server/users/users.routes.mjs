@@ -22,7 +22,7 @@ export const UsersRouter = Router();
    res.send(await getUserById(req.params.id));
  });
 
- //READ
+ //READ - Get product(s) by ID
  UsersRouter.get('/:id/products', async (req, res) => {
     res.send(await getProductBySellerId(req.params.id));
  });
