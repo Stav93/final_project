@@ -9,9 +9,10 @@ import Park from '../Parks/Park/Park.js';
 function AppRoutes() {
 
   return (
+
     <Routes>
       {/* לוגין */}
-      <Route path='/login' element={(<Login/>)} /> 
+      {/* <Route path='/login' element={(<Login/>)} />  */}
     
       {/* פרופיל */}
       <Route path='/profile/:profileName' element={( <UserProfile />)}/>

@@ -27,6 +27,13 @@ export async function removeDog(id) {
 }
 
 export async function editDog(id, dog) {
-    const dogsColection = await getDogsColletion();
+  const dogsColection = await getDogsColletion();
   return dogsColection.updateOne({_id: ObjectID(id)} , { $set: dog })
+}
+
+export async function getDogsByUserId(userId) {
+  const dogsColection = await getDogsColletion();
+  return dogsColection.find({
+    userId
+  }).toArray();
 }

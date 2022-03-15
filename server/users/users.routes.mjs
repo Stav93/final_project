@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import { addUser, editUser, getAllUsers, getUserById, removeUser } from './users.data.mjs';
-// import { getProductBySellerId } from '../products/products.data.mjs';
+import { getDogsByUserId } from '../dogs/dogs.data.mjs';
 
 export const UsersRouter = Router();
 
@@ -22,9 +22,9 @@ export const UsersRouter = Router();
    res.send(await getUserById(req.params.id));
  });
 
- //READ - Get product(s) by ID
- UsersRouter.get('/:id/products', async (req, res) => {
-    res.send(await getProductBySellerId(req.params.id));
+ //READ - Get dog(s) by (User) ID
+ UsersRouter.get('/:id/dogs', async (req, res) => {
+    res.send(await getDogsByUserId(req.params.id));
  });
  
 //  POST - add user
