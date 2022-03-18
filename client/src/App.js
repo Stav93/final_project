@@ -1,23 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import MainHeader from "./components/UI/MainHeader/MainHeader.js"
-import ParksList from "./components/Parks/ParksList/ParksList.js"
-import DogsList from "./components/User/Dogs/DogsList/DogsList.js"
-import AppRoutes from "./components/UI/AppRoutes.js"
-import {DogsProvider} from "./Context/DogsContext"
+import React, { useEffect, useState, useContext } from 'react';
 
+import Login from './components/Login/Login';
+import UserProfile from "../src/components/User/UserProfile/UserProfile"
+import Header from "../src/components/UI/Header/Header"
+import AuthContext from "../src/components/Login/AuthContext.js"
 
 function App() {
+  const ctx = useContext(AuthContext)
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // useEffect(() => {
+  //   const storedUserLoggedInInformaition = localStorage.getItem('isLoggedIn')
+
+  //   if (storedUserLoggedInInformaition === "1") {
+  //     setIsLoggedIn(true);
+  //   }
+  // },[])
+
+  // const loginHandler = (email, password) => {
+  //   // We should of course check email and password
+  //   localStorage.setItem("isLoggedIn","1")
+  //   setIsLoggedIn(true);
+  // };
+
+  // const logoutHandler = () => {
+  //   localStorage.removeItem('isLoggedIn');
+  //   setIsLoggedIn(false);
+  // };
 
   return (
-    <DogsProvider>
     <>
-       <MainHeader/>
-       <ParksList/>
-       <DogsList/>
+      <Header/>
+      <main>
+        {!ctx.isLoggedIn && <Login/>}
+        {ctx.isLoggedIn && <UserProfile/>}
+      </main>
     </>
-    </DogsProvider>
   );
 }
 
 export default App;
+
+  // return (
+  //   <DogsProvider>
+  //   <>
+  //      <MainHeader/>
+  //      <ParksList/>
+  //      <DogsList/>
+  //   </>
+  //   </DogsProvider>
+  // );
 
