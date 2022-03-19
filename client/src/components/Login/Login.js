@@ -2,9 +2,11 @@ import React, {useEffect, useReducer, useContext, useState} from 'react'
 import classes from './Login.module.css'
 import Input from "../Input/Input.js"
 import Button from "../UI/Button/Button.js"
-import AuthContext from "./AuthContext.js"
+import {useAuthContext} from "./AuthContext.js"
 
 
+// reducerFunc => (prevState, action) [via dispatchFunc]
+// state - האחרון שנמצא שם, לא הראושני, כמו ביוז סטייס
 const nameReducer = (state, action) => {
   if (action.type === 'USER_INPUT') {
     return { value: action.val, isValid: action.val.trim().length > 0 };
@@ -38,8 +40,11 @@ const passwordReducer = (state, action) => {
 // ----------------------------------------------------------------------------------
 
 const Login = (props) => {
-  const ctx = useContext(AuthContext)
+  const ctx = useAuthContext();
   const [formIsValid, setFormIsValid] = useState(false);
+
+  // USE_REDUCER
+  // const [state, dispatchFunc] = useReducer(reducerFunc, initialState);
 
   const [nameState, dispatchName] = useReducer(nameReducer, {
     value: '', //nameState.value
@@ -78,7 +83,10 @@ const Login = (props) => {
     };
   }, [nameIsValid, emailIsValid, passwordIsValid]);
 
+  // פונקציות שמשתמשים בהן כדי לשלוח דרך הדיספאצ 
+  //  את האובייקט אקשן שבו יש טייפ ומה שנרצה עוד שישפיע על הסטייט החדש
   const nameChangeHandler = (event) => {
+    // actionObj: {type: "", payload: .. }
     dispatchName({type: 'USER_INPUT', val: event.target.value});
   };
   const emailChangeHandler = (event) => {
@@ -100,7 +108,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    ctx.onLogin(emailState.value, passwordState.value);
+    ctx.onLogin(nameState.value, emailState.value, passwordState.value);
   };
   
   return (

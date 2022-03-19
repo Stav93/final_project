@@ -1,10 +1,11 @@
 import React from 'react'
 import Navigation from '../Navigation/Navigation'
+import classes from "./Header.module.css"
 
 function Header() {
   return (
-    <header>
-      <h1>Dpgs Parks App</h1>
+    <header >
+      <div className={classes.header}></div>
       <Navigation />
     </header>
   )

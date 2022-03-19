@@ -1,22 +1,22 @@
 import React, {useContext} from 'react'
-import AuthContext from "../../Login/AuthContext"
+import { useAuthContext} from "../../Login/AuthContext"
 
 function Navigation() {
-  const ctx = useContext(AuthContext)
+  const ctx =  useAuthContext()
   return (
     <nav>
       <ul>
-        {ctx.isLoggedIn && (
+        {ctx.userLoggedObj.isLoggedIn && (
           <li>
             <a href="/">My Profile</a>
           </li>
         )}
-        {ctx.isLoggedIn && (
+        {ctx.userLoggedObj.isLoggedIn && (
           <li>
             <a href="/">Parks</a>
           </li>
         )}
-        {ctx.isLoggedIn && (
+        {ctx.userLoggedObj.isLoggedIn && (
           <li>
             <button onClick={ctx.onLogout}>Logout</button>
           </li>

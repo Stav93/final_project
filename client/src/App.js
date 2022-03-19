@@ -3,10 +3,10 @@ import React, { useEffect, useState, useContext } from 'react';
 import Login from './components/Login/Login';
 import UserProfile from "../src/components/User/UserProfile/UserProfile"
 import Header from "../src/components/UI/Header/Header"
-import AuthContext from "../src/components/Login/AuthContext.js"
+import { useAuthContext} from "../src/components/Login/AuthContext.js"
 
 function App() {
-  const ctx = useContext(AuthContext)
+  const ctx =  useAuthContext()
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // useEffect(() => {
@@ -31,9 +31,10 @@ function App() {
   return (
     <>
       <Header/>
+      <UserProfile/>
       <main>
-        {!ctx.isLoggedIn && <Login/>}
-        {ctx.isLoggedIn && <UserProfile/>}
+        {/* {!ctx.userLoggedObj.isLoggedIn && <Login/>}
+        {ctx.userLoggedObj.isLoggedIn && <UserProfile/>} */}
       </main>
     </>
   );
