@@ -12,6 +12,13 @@ const AuthContext = React.createContext({});
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userLoggedObj, setUserLoggedObj] = 
   useState({isLoggedIn:false, name:"", email:"", password:""});
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/users')
+      .then(response => response.json())
+      .then(data => setUsers(data))
+  }, []);
 
   useEffect(() => {
     const storedUserLoggedInInformaition = localStorage.getItem('isLoggedIn')
@@ -23,17 +30,29 @@ const AuthContext = React.createContext({});
   },[])
    
   const loginHandler = (name, email, password) => {
-    //should check email and password
-    localStorage.setItem("isLoggedIn","1")
-    // setIsLoggedIn(true);
-    setUserLoggedObj({isLoggedIn: true, name: name, email: email, password:password});
+    const userObj = users.find((user) => user.name === name)
+    if (userObj) {
+      if (name === userObj.name && email === userObj.email && password === userObj.password ) {
+      localStorage.setItem("isLoggedIn","1")
+      // setIsLoggedIn(true);
+      setUserLoggedObj({isLoggedIn: true, name: name, email: email, password:password});
+      } else {
+        window.confirm('one or more is not correct')
+      }
+    }
+     else {
+      window.confirm('User Not Found')
+    }
+  };
+
+  const signInHandler = () => {
+
   };
 
   const logoutHandler = () => {
     localStorage.removeItem('isLoggedIn');
     // setIsLoggedIn(false);
     setUserLoggedObj({...userLoggedObj, isLoggedIn: false});
-
   };
 
   const value = useMemo(() => ({
@@ -42,7 +61,9 @@ const AuthContext = React.createContext({});
     userLoggedObj: userLoggedObj,
     onLogout: logoutHandler,
     onLogin: loginHandler,
-  }), [userLoggedObj, logoutHandler, loginHandler]);
+    onSignIn: signInHandler,
+    users: users,
+  }), [users, userLoggedObj, logoutHandler, loginHandler]);
 
   return (
     <AuthContext.Provider value={value}>

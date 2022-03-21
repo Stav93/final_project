@@ -31,10 +31,10 @@ function App() {
   return (
     <>
       <Header/>
-      <UserProfile/>
+      {/* <UserProfile/> */}
       <main>
-        {/* {!ctx.userLoggedObj.isLoggedIn && <Login/>}
-        {ctx.userLoggedObj.isLoggedIn && <UserProfile/>} */}
+        {!ctx.userLoggedObj.isLoggedIn && <Login/>}
+        {ctx.userLoggedObj.isLoggedIn && <UserProfile/>}
       </main>
     </>
   );

@@ -1,8 +1,10 @@
 import React, {useEffect, useReducer, useContext, useState} from 'react'
 import classes from './Login.module.css'
 import Input from "../Input/Input.js"
+import SignUp from "../SignUp/SignUp.js"
 import Button from "../UI/Button/Button.js"
 import {useAuthContext} from "./AuthContext.js"
+import { useNavigate } from "react-router-dom";
 
 
 // reducerFunc => (prevState, action) [via dispatchFunc]
@@ -29,10 +31,10 @@ const emailReducer = (state, action) => {
 
 const passwordReducer = (state, action) => {
   if (action.type === 'USER_INPUT') {
-    return { value: action.val, isValid: action.val.trim().length > 6 };
+    return { value: action.val, isValid: action.val.trim().length >= 6 };
   }
   if (action.type === 'INPUT_BLUR') {
-    return { value: state.value, isValid: state.value.trim().length > 6 };
+    return { value: state.value, isValid: state.value.trim().length >= 6 };
   }
   return { value: '', isValid: false };
 };
@@ -42,6 +44,7 @@ const passwordReducer = (state, action) => {
 const Login = (props) => {
   const ctx = useAuthContext();
   const [formIsValid, setFormIsValid] = useState(false);
+  const clickDontHaveUserHandler = useNavigate();
 
   // USE_REDUCER
   // const [state, dispatchFunc] = useReducer(reducerFunc, initialState);
@@ -110,6 +113,7 @@ const Login = (props) => {
     event.preventDefault();
     ctx.onLogin(nameState.value, emailState.value, passwordState.value);
   };
+
   
   return (
     <>
@@ -145,10 +149,10 @@ const Login = (props) => {
       <Button type="submit" className={classes.btn} disableBtn={!formIsValid}>
           Login
        </Button>
-      {/* <Button type="submit" className={classes.btn} disableBtn={!formIsValid}>
-          Crate A New Acount
-       </Button> */}
       </div>
+      <Button type="submit" onClick={() => clickDontHaveUserHandler("/sign-up")} className={classes.btn}>
+          Crate A New Acount
+       </Button>
     </form>
   </>
   );
